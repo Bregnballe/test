@@ -3,6 +3,20 @@ import styled from 'styled-components';
 import logo from './logo.svg';
 import './App.css';
 
+let fakeServerData = {
+  user: 'Mattias',
+  cards: [
+    {
+      title: 'Very cool card title',
+      description: 'Is very cool'
+    },
+    {
+      title: 'Very cool card title2',
+      description: 'Is also very cool'
+    }
+  ]
+}
+
 
 const CardTitle = styled.h1`
   font-size: 1.5em;
@@ -24,7 +38,7 @@ class Card extends Component {
   render () {
     return (
       <CardContainer>
-        <CardTitle>This is my card title</CardTitle>
+        <CardTitle>{this.props.title}</CardTitle>
       </CardContainer>
     );
   }
@@ -32,11 +46,28 @@ class Card extends Component {
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {serverData: {}}
+  }
+   //The constructur method is called when an instance of a component is being created and inserted into the DOM.
+   //super allows you to access the constructor method of the parent class. The only reason to include props is to access this.props inside of your constructor. You cannot use this.props before running the super method. Calling super() is necessary only if you need to have a constructor
+
+  componentDidMount() {
+    this.setState({serverData: fakeServerData});
+  }
+
   render() {
     return (
-      <Card/>
+      <div>
+        <Card
+          title={this.state.serverData.user}
+        />
+      </div>
     );
   }
 }
+
 
 export default App;
